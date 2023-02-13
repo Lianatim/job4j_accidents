@@ -6,6 +6,7 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.repository.AccidentMem;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class SimpleAccidentService implements AccidentService {
@@ -29,5 +30,10 @@ public class SimpleAccidentService implements AccidentService {
     @Override
     public boolean update(Accident accident) {
         return accidentMem.update(accident);
+    }
+
+    @Override
+    public Optional<Accident> findById(int id) {
+        return accidentMem.findById(id);
     }
 }
