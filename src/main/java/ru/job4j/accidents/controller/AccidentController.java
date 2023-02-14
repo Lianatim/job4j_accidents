@@ -22,11 +22,14 @@ public class AccidentController {
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident) {
         accidentService.add(accident);
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     @GetMapping("/formUpdate")
     public String formUpdate(@RequestParam("id") int id, Model model) {
+       if (!accidentService.findById(id).isPresent()) {
+           return "redirect:/accidents/fail";
+       }
         model.addAttribute("accident", accidentService.findById(id).get());
         return "accidents/formUpdate";
     }
@@ -35,5 +38,10 @@ public class AccidentController {
     public String update(@ModelAttribute Accident accident) {
         accidentService.update(accident);
         return "redirect:/";
+    }
+
+    @GetMapping("/fail")
+    public String failPage() {
+        return "shared/fail";
     }
 }

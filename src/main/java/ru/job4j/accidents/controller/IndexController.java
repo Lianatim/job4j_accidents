@@ -16,7 +16,6 @@ public class IndexController {
 
     @GetMapping("/")
     public String showHomePage(Model model) {
-        model.addAttribute("user", "Petr Arsentev");
         model.addAttribute("accidents", accidentService.findAll());
         return "index";
     }
