@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
+import ru.job4j.accidents.service.AccidentTypeService;
 
 @Controller
 @AllArgsConstructor
@@ -13,14 +14,20 @@ import ru.job4j.accidents.service.AccidentService;
 public class AccidentController {
 
     private final AccidentService accidentService;
+    private final AccidentTypeService accidentTypeService;
 
     @GetMapping("/formCreate")
-    public String viewCreateAccident() {
-        return "accidents/createForm";
+    public String viewCreateAccident(Model model) {
+        model.addAttribute("types", accidentTypeService.findAll());
+        return "/accidents/formCreate";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident) {
+    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId) {
+        if (!accidentTypeService.findById(typeId).isPresent()) {
+            return "redirect:/accidents/fail";
+        }
+        accident.setType(accidentTypeService.findById(typeId).get());
         accidentService.add(accident);
         return "redirect:/";
     }
@@ -31,6 +38,7 @@ public class AccidentController {
            return "redirect:/accidents/fail";
        }
         model.addAttribute("accident", accidentService.findById(id).get());
+        model.addAttribute("types", accidentTypeService.findAll());
         return "accidents/formUpdate";
     }
 

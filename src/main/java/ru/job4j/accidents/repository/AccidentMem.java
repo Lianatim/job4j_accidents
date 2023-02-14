@@ -2,6 +2,7 @@ package ru.job4j.accidents.repository;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.model.AccidentType;
 
 import java.util.Collection;
 import java.util.Map;
@@ -17,8 +18,8 @@ public class AccidentMem implements AccidentRepository {
 
 
     public AccidentMem() {
-        accidents.put(count.incrementAndGet(), new Accident(count.get(), "name1", "text1", "address1"));
-        accidents.put(count.incrementAndGet(), new Accident(count.get(), "name2", "text2", "address2"));
+        accidents.put(count.incrementAndGet(), new Accident(count.get(), "name1", "text1", "address1", new AccidentType(count.get(), "Превышение скорости")));
+        accidents.put(count.incrementAndGet(), new Accident(count.get(), "name2", "text2", "address2", new AccidentType(count.get(), "Превышение скорости")));
     }
 
     @Override
