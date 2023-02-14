@@ -3,22 +3,20 @@ package ru.job4j.accidents.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/accidents")
 public class AccidentController {
 
     private final AccidentService accidentService;
 
-    @GetMapping("/create")
+    @GetMapping("/formCreate")
     public String viewCreateAccident() {
-        return "accident/create";
+        return "accidents/createForm";
     }
 
     @PostMapping("/save")
@@ -30,7 +28,7 @@ public class AccidentController {
     @GetMapping("/formUpdate")
     public String formUpdate(@RequestParam("id") int id, Model model) {
         model.addAttribute("accident", accidentService.findById(id).get());
-        return "accident/formUpdate";
+        return "accidents/formUpdate";
     }
 
     @PostMapping("/update")
