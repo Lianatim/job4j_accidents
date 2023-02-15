@@ -10,6 +10,7 @@ import ru.job4j.accidents.service.AccidentTypeService;
 import ru.job4j.accidents.service.RuleService;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class AccidentController {
     @PostMapping("/save")
     public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
                        @RequestParam("rIds") List<Integer> rIds) {
-        if (!accidentTypeService.findById(typeId).isPresent()) {
+        if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
         }
         accident.setType(accidentTypeService.findById(typeId).get());
@@ -41,10 +42,11 @@ public class AccidentController {
 
     @GetMapping("/formUpdate")
     public String formUpdate(@RequestParam("id") int id, Model model) {
-       if (!accidentService.findById(id).isPresent()) {
-           return "redirect:/accidents/fail";
-       }
-        model.addAttribute("accident", accidentService.findById(id).get());
+        Optional<Accident> accident = accidentService.findById(id);
+        if (accident.isEmpty()) {
+            return "redirect:/accidents/fail";
+        }
+        model.addAttribute("accident", accident.get());
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", accidentTypeService.findAll());
         return "accidents/formUpdate";
@@ -53,7 +55,7 @@ public class AccidentController {
     @PostMapping("/update")
     public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
                          @RequestParam("rIds") List<Integer> rIds) {
-        if (!accidentTypeService.findById(typeId).isPresent()) {
+        if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
         }
         accident.setType(accidentTypeService.findById(typeId).get());
