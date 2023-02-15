@@ -1,9 +1,13 @@
 package ru.job4j.accidents.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import ru.job4j.accidents.exception.InvalidParamsException;
+import ru.job4j.accidents.exception.ParamErrorResponse;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.service.AccidentService;
 import ru.job4j.accidents.service.AccidentTypeService;
@@ -29,8 +33,7 @@ public class AccidentController {
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
-                       @RequestParam("rIds") List<Integer> rIds) {
+    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, @RequestParam("rIds") List<Integer> rIds) {
         if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
         }
@@ -53,8 +56,7 @@ public class AccidentController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId,
-                         @RequestParam("rIds") List<Integer> rIds) {
+    public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, @RequestParam("rIds") List<Integer> rIds) {
         if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
         }
@@ -67,6 +69,12 @@ public class AccidentController {
     @GetMapping("/fail")
     public String failPage() {
         return "shared/fail";
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ParamErrorResponse> handlerException(InvalidParamsException e) {
+        ParamErrorResponse response = new ParamErrorResponse("Переданы неверные парметры", System.currentTimeMillis());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
 

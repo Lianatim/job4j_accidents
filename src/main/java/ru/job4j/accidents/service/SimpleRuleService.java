@@ -2,6 +2,7 @@ package ru.job4j.accidents.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.RuleRepository;
 
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 public class SimpleRuleService implements RuleService {
 
     private final RuleRepository ruleRepository;
+
     @Override
     public void add(Rule rule) {
         ruleRepository.add(rule);
@@ -32,8 +34,12 @@ public class SimpleRuleService implements RuleService {
 
     @Override
     public Set<Rule> findByIds(List<Integer> rIds) {
-        return ruleRepository.findAll().stream()
+        Set<Rule> rsl = ruleRepository.findAll().stream()
                 .filter((r) -> rIds.contains(r.getId()))
                 .collect(Collectors.toSet());
+        if (rsl.size() != rIds.size()) {
+            throw new InvalidParamsException();
+        }
+        return rsl;
     }
 }
