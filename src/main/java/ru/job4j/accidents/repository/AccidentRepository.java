@@ -2,15 +2,15 @@ package ru.job4j.accidents.repository;
 
 import ru.job4j.accidents.model.Accident;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 public interface AccidentRepository {
-    void add(Accident accident);
+    Accident add(Accident accident);
 
-    Collection<Accident> findAll();
+    List<Accident> findAll();
 
-    boolean update(Accident accident);
+    void update(Accident accident);
 
     Optional<Accident> findById(int id);
 }

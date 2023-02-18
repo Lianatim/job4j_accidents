@@ -5,10 +5,7 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.model.Rule;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -27,18 +24,18 @@ public class AccidentMem implements AccidentRepository {
     }
 
     @Override
-    public void add(Accident accident) {
-        accidents.putIfAbsent(accident.getId(), accident);
+    public Accident add(Accident accident) {
+       return accidents.putIfAbsent(accident.getId(), accident);
     }
 
     @Override
-    public Collection<Accident> findAll() {
-        return accidents.values();
+    public List<Accident> findAll() {
+        return accidents.values().stream().toList();
     }
 
     @Override
-    public boolean update(Accident accident) {
-        return accidents.replace(accident.getId(), accidents.get(accident.getId()), accident);
+    public void update(Accident accident) {
+        accidents.replace(accident.getId(), accidents.get(accident.getId()), accident);
     }
 
     @Override

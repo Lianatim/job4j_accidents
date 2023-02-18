@@ -28,7 +28,7 @@ public class AccidentController {
     @GetMapping("/formCreate")
     public String viewCreateAccident(Model model) {
         model.addAttribute("types", accidentTypeService.findAll());
-        model.addAttribute("rules", accidentTypeService.findAll());
+        model.addAttribute("rules", ruleService.findAll());
         return "/accidents/formCreate";
     }
 
@@ -51,7 +51,7 @@ public class AccidentController {
         }
         model.addAttribute("accident", accident.get());
         model.addAttribute("types", accidentTypeService.findAll());
-        model.addAttribute("rules", accidentTypeService.findAll());
+        model.addAttribute("rules", ruleService.findAll());
         return "accidents/formUpdate";
     }
 
