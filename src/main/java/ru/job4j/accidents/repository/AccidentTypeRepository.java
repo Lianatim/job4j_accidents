@@ -7,9 +7,10 @@ import java.util.Optional;
 
 public interface AccidentTypeRepository {
 
-    void add(AccidentType accidentType);
+    AccidentType add(AccidentType accidentType);
 
     List<AccidentType> findAll();
 
     Optional<AccidentType> findById(int id);
+    void update(AccidentType accidentType);
 }

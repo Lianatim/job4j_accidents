@@ -19,8 +19,9 @@ public class AccidentTypeMem implements AccidentTypeRepository {
     }
 
     @Override
-    public void add(AccidentType accidentType) {
+    public AccidentType add(AccidentType accidentType) {
         types.add(accidentType);
+        return accidentType;
     }
 
     @Override
@@ -31,5 +32,10 @@ public class AccidentTypeMem implements AccidentTypeRepository {
     @Override
     public Optional<AccidentType> findById(int id) {
         return Optional.ofNullable(types.get(id));
+    }
+
+    @Override
+    public void update(AccidentType accidentType) {
+        types.set(accidentType.getId(), accidentType);
     }
 }

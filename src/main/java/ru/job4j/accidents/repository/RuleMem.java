@@ -6,6 +6,7 @@ import ru.job4j.accidents.model.Rule;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public class RuleMem implements RuleRepository {
@@ -18,8 +19,9 @@ public class RuleMem implements RuleRepository {
     }
 
     @Override
-    public void add(Rule rule) {
+    public Rule add(Rule rule) {
         rules.add(rule);
+        return rule;
     }
 
     @Override
@@ -30,6 +32,11 @@ public class RuleMem implements RuleRepository {
     @Override
     public Optional<Rule> findById(int id) {
         return Optional.ofNullable(rules.get(id));
+    }
+
+    @Override
+    public void update(Rule rule) {
+        rules.set(rule.getId(), rule);
     }
 
 }

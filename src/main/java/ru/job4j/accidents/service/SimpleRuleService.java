@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.model.Rule;
+import ru.job4j.accidents.repository.RuleHibernate;
 import ru.job4j.accidents.repository.RuleRepository;
 
 import java.util.List;
@@ -12,8 +13,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class SimpleRuleService implements RuleService {
+
+    public SimpleRuleService(RuleHibernate ruleRepository) {
+        this.ruleRepository = ruleRepository;
+    }
 
     private final RuleRepository ruleRepository;
 
