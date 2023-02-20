@@ -1,37 +1,37 @@
 package ru.job4j.accidents.service;
 
-
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentHibernate;
-import ru.job4j.accidents.repository.AccidentRepository;
+import ru.job4j.accidents.repository.AccidentRepositoryJpa;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class SimpleAccidentService implements AccidentService {
+public class AccidentServiceJpa implements AccidentService {
 
-    private final AccidentRepository accidentRepository;
+    private final AccidentRepositoryJpa accidentRepository;
 
-    public SimpleAccidentService(AccidentHibernate accidentRepository) {
+    public AccidentServiceJpa(AccidentRepositoryJpa accidentRepository) {
         this.accidentRepository = accidentRepository;
     }
 
-
     @Override
     public void add(Accident accident) {
-        accidentRepository.add(accident);
+        accidentRepository.save(accident);
     }
 
     @Override
     public List<Accident> findAll() {
-        return accidentRepository.findAll();
+        List<Accident> accidents = new ArrayList<>();
+        accidentRepository.findAll().forEach(accidents::add);
+        return accidents;
     }
 
     @Override
     public void update(Accident accident) {
-        accidentRepository.update(accident);
+        accidentRepository.save(accident);
     }
 
     @Override

@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.exception.ParamErrorResponse;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.service.AccidentService;
-import ru.job4j.accidents.service.AccidentTypeService;
-import ru.job4j.accidents.service.RuleService;
+import ru.job4j.accidents.service.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +19,9 @@ import java.util.Optional;
 @RequestMapping("/accidents")
 public class AccidentController {
 
-    private final AccidentService accidentService;
-    private final AccidentTypeService accidentTypeService;
-    private final RuleService ruleService;
+    private final AccidentServiceJpa accidentService;
+    private final AccidentTypeServiceJpa accidentTypeService;
+    private final RuleServiceJpa ruleService;
 
     @GetMapping("/formCreate")
     public String viewCreateAccident(Model model) {

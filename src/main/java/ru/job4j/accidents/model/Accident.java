@@ -22,11 +22,11 @@ public class Accident {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
     private AccidentType type;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "rule_accident",
-            joinColumns = {@JoinColumn(name = "rule_id")},
-            inverseJoinColumns = {@JoinColumn(name = "accident_id")}
+            joinColumns = {@JoinColumn(name = "accident_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rule_id")}
     )
     private Set<Rule> rules;
 

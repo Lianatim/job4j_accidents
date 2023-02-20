@@ -3,29 +3,30 @@ package ru.job4j.accidents.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.RuleHibernate;
-import ru.job4j.accidents.repository.RuleRepository;
+import ru.job4j.accidents.repository.RuleRepositoryJpa;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class SimpleRuleService implements RuleService {
-    private final RuleRepository ruleRepository;
-    public SimpleRuleService(RuleHibernate ruleRepository) {
+public class RuleServiceJpa implements RuleService {
+    private final RuleRepositoryJpa ruleRepository;
+
+    public RuleServiceJpa(RuleRepositoryJpa ruleRepository) {
         this.ruleRepository = ruleRepository;
     }
 
+
     @Override
     public void add(Rule rule) {
-        ruleRepository.add(rule);
+        ruleRepository.save(rule);
     }
 
     @Override
     public List<Rule> findAll() {
-        return ruleRepository.findAll();
+        List<Rule> rules = new ArrayList<>();
+        ruleRepository.findAll().forEach(rules::add);
+        return rules;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class SimpleRuleService implements RuleService {
 
     @Override
     public Set<Rule> findByIds(List<Integer> rIds) {
-        Set<Rule> rsl = ruleRepository.findAll().stream()
+        Set<Rule> rsl = findAll().stream()
                 .filter((r) -> rIds.contains(r.getId()))
                 .collect(Collectors.toSet());
         if (rsl.size() != rIds.size()) {
