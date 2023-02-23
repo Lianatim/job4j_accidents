@@ -3,7 +3,7 @@ package ru.job4j.accidents.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentHibernate;
+import ru.job4j.accidents.repository.hbm.AccidentHibernate;
 import ru.job4j.accidents.repository.AccidentRepository;
 
 import java.util.List;

@@ -1,8 +1,9 @@
-package ru.job4j.accidents.service;
+package ru.job4j.accidents.service.jpa;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.repository.AccidentRepositoryJpa;
+import ru.job4j.accidents.repository.jpa.AccidentRepositoryJpa;
+import ru.job4j.accidents.service.AccidentService;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,10 @@
-package ru.job4j.accidents.repository;
+package ru.job4j.accidents.repository.hbm;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
+import ru.job4j.accidents.repository.AccidentRepository;
+import ru.job4j.accidents.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Map;

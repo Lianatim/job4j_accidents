@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.exception.ParamErrorResponse;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.service.*;
+import ru.job4j.accidents.service.jpa.AccidentServiceJpa;
+import ru.job4j.accidents.service.jpa.AccidentTypeServiceJpa;
+import ru.job4j.accidents.service.jpa.RuleServiceJpa;
 
 import java.util.List;
 import java.util.Optional;

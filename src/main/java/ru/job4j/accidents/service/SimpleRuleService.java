@@ -3,7 +3,7 @@ package ru.job4j.accidents.service;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.RuleHibernate;
+import ru.job4j.accidents.repository.hbm.RuleHibernate;
 import ru.job4j.accidents.repository.RuleRepository;
 
 import java.util.List;

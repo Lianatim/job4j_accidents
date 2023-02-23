@@ -1,9 +1,10 @@
-package ru.job4j.accidents.service;
+package ru.job4j.accidents.service.jpa;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.model.Rule;
-import ru.job4j.accidents.repository.RuleRepositoryJpa;
+import ru.job4j.accidents.repository.jpa.RuleRepositoryJpa;
+import ru.job4j.accidents.service.RuleService;
 
 import java.util.*;
 import java.util.stream.Collectors;
