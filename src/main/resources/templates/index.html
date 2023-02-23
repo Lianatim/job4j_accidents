@@ -19,6 +19,10 @@
 <body>
 <div class="container">
     <header th:insert="blocks/header :: header"></header>
+    <div>
+        <span>Login as: </span>
+        <span th:text="${user.username}"></span>
+    </div>
     <table class="table">
         <thead>
         <tr>
