@@ -5,7 +5,6 @@ import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.repository.jpa.AccidentTypeRepositoryJpa;
 import ru.job4j.accidents.service.AccidentTypeService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,9 +25,7 @@ public class AccidentTypeServiceJpa implements AccidentTypeService {
 
     @Override
     public List<AccidentType> findAll() {
-        List<AccidentType> accidentTypes = new ArrayList<>();
-        accidentTypeRepository.findAll().forEach(accidentTypes::add);
-        return accidentTypes;
+        return accidentTypeRepository.findAll();
     }
 
     @Override

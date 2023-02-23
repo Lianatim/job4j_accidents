@@ -25,9 +25,7 @@ public class RuleServiceJpa implements RuleService {
 
     @Override
     public List<Rule> findAll() {
-        List<Rule> rules = new ArrayList<>();
-        ruleRepository.findAll().forEach(rules::add);
-        return rules;
+        return ruleRepository.findAll();
     }
 
     @Override
