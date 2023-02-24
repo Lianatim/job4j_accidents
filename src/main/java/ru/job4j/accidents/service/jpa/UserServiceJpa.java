@@ -16,13 +16,8 @@ public class UserServiceJpa {
         this.userRepositoryJpa = userRepositoryJpa;
     }
 
-    public boolean save(User user) {
-        Optional<User> userName = userRepositoryJpa.findByUsername(user.getUsername());
-        if (userName.isPresent()) {
-            return false;
-        }
+    public void save(User user) {
         userRepositoryJpa.save(user);
-        return true;
     }
 
     public List<User> findAll() {

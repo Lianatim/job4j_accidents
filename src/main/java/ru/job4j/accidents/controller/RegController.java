@@ -1,5 +1,6 @@
 package ru.job4j.accidents.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,8 +29,9 @@ public class RegController {
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(authorityService.findByAuthority("ROLE_USER"));
-        boolean userSave = userService.save(user);
-        if (!userSave) {
+        try {
+            userService.save(user);
+        } catch (DataIntegrityViolationException e) {
             model.addAttribute("errorMessage", "Пользователь с таким именем уже существует");
             return "users/reg";
         }
