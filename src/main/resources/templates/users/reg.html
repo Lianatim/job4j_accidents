@@ -21,9 +21,6 @@
   <title>TODO list</title>
 </head>
 <body>
-<div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
-  <span th:text="${errorMessage}"></span>
-</div>
 <div class="container pt-3">
   <header th:insert="blocks/header :: header"></header>
   <div class="row justify-content-center">
@@ -34,6 +31,9 @@
         </div>
         <div class="card-body shadow">
           <form th:action="@{/reg}" method="POST">
+            <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
+              <span th:text="${errorMessage}"></span>
+            </div>
             <label>Login</label>
             <div class="form-group row justify-content-center">
               <input type="text" class="form-control bg-light col-md-6" placeholder="type a login"
