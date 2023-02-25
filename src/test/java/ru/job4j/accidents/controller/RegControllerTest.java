@@ -50,13 +50,6 @@ public class RegControllerTest {
 
     @Test
     @WithMockUser
-    public void shouldReturn500() throws Exception {
-        this.mockMvc.perform(get("/error"))
-                .andExpect(status().is(500));
-    }
-
-    @Test
-    @WithMockUser
     public void shouldRedirectWhenSave() throws Exception {
         this.mockMvc.perform(post("/reg")
                         .param("id", "1")

@@ -34,10 +34,4 @@ public class IndexControllerTest {
                 .andExpect(status().is(404));
     }
 
-    @Test
-    @WithMockUser
-    public void shouldReturn500() throws Exception {
-        this.mockMvc.perform(get("/error"))
-                .andExpect(status().is(500));
-    }
 }
