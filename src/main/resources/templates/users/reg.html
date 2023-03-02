@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://thymeleaf.org">
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -17,7 +18,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
           crossorigin="anonymous"></script>
-
+  <link rel="stylesheet" th:href="@{/styles.css}"/>
   <title>Accidents</title>
 </head>
 <body>
@@ -30,7 +31,7 @@
           User registration
         </div>
         <div class="card-body shadow">
-          <form th:action="@{/reg}" method="POST">
+          <form th:action="@{/reg}" method="POST" th:object="${user}">
             <div th:if="${not #lists.isEmpty(errorMessage)}" class="alert alert-danger" role="alert">
               <span th:text="${errorMessage}"></span>
             </div>
@@ -38,12 +39,18 @@
             <div class="form-group row justify-content-center">
               <input type="text" class="form-control bg-light col-md-6" placeholder="type a login"
                      name="username" id="username" required>
+              <span class="validationError"
+                    th:if="${#fields.hasErrors('username')}"
+                    th:errors="*{username}">Name Error</span>
             </div>
             <label>Password</label>
             <div class="form-group row justify-content-center">
               <input type="password" class="form-control bg-light col-md-6"
                      placeholder="*******"
                      name="password" id="password" required>
+              <span class="validationError"
+                    th:if="${#fields.hasErrors('password')}"
+                    th:errors="*{password}">Password Error</span>
               </div>
             <div class="form-group row justify-content-center">If you already have an account :
               <a th:href="@{/login}" class="link" role="button"

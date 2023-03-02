@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.exception.InvalidParamsException;
 import ru.job4j.accidents.exception.ParamErrorResponse;
@@ -13,6 +14,7 @@ import ru.job4j.accidents.service.jpa.AccidentServiceJpa;
 import ru.job4j.accidents.service.jpa.AccidentTypeServiceJpa;
 import ru.job4j.accidents.service.jpa.RuleServiceJpa;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,13 +29,18 @@ public class AccidentController {
 
     @GetMapping("/formCreate")
     public String viewCreateAccident(Model model) {
+        model.addAttribute("accident", new Accident());
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
         return "/accidents/formCreate";
     }
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, @RequestParam("rIds") List<Integer> rIds) {
+    public String save(@ModelAttribute @Valid Accident accident,  Errors errors, @RequestParam("type.id") int typeId,
+                       @RequestParam("rIds") List<Integer> rIds) {
+        if (errors.hasErrors()) {
+            return "/accidents/formCreate";
+        }
         if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
         }
@@ -45,6 +52,7 @@ public class AccidentController {
 
     @GetMapping("/formUpdate")
     public String formUpdate(@RequestParam("id") int id, Model model) {
+        model.addAttribute("accident", new Accident());
         Optional<Accident> accident = accidentService.findById(id);
         if (accident.isEmpty()) {
             return "redirect:/accidents/fail";
@@ -56,9 +64,13 @@ public class AccidentController {
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Accident accident, @RequestParam("type.id") int typeId, @RequestParam("rIds") List<Integer> rIds) {
+    public String update(@Valid @ModelAttribute Accident accident, Errors errors, @RequestParam("type.id") int typeId,
+                         @RequestParam("rIds") List<Integer> rIds) {
         if (accidentTypeService.findById(typeId).isEmpty()) {
             return "redirect:/accidents/fail";
+        }
+        if (errors.hasErrors()) {
+            return "/accidents/formUpdate";
         }
         accident.setType(accidentTypeService.findById(typeId).get());
         accident.setRules(ruleService.findByIds(rIds));

@@ -1,8 +1,14 @@
 package ru.job4j.accidents.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @Data
@@ -15,12 +21,17 @@ public class Accident {
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull(message = "Id must be non null")
     private int id;
+    @NotBlank(message = "Name must be not empty")
     private String name;
+    @NotBlank(message = "Text must be not empty")
     private String text;
+    @NotBlank(message = "Address must be not empty")
     private String address;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "type_id")
+    @NotNull
     private AccidentType type;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(
@@ -28,6 +39,7 @@ public class Accident {
             joinColumns = {@JoinColumn(name = "accident_id")},
             inverseJoinColumns = {@JoinColumn(name = "rule_id")}
     )
+    @NotEmpty
     private Set<Rule> rules;
 
     public Accident(int id, String name, String text, String address, AccidentType type) {

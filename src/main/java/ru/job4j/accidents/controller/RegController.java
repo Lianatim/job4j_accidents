@@ -4,12 +4,15 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.job4j.accidents.model.User;
 import ru.job4j.accidents.service.jpa.AuthorityServiceJpa;
 import ru.job4j.accidents.service.jpa.UserServiceJpa;
+
+import javax.validation.Valid;
 
 @Controller
 public class RegController {
@@ -25,7 +28,10 @@ public class RegController {
     }
 
     @PostMapping("/reg")
-    public String regSave(@ModelAttribute User user, Model model) {
+    public String regSave(@Valid @ModelAttribute User user, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            return "users/reg";
+        }
         user.setEnabled(true);
         user.setPassword(encoder.encode(user.getPassword()));
         user.setAuthority(authorityService.findByAuthority("ROLE_USER"));
@@ -39,7 +45,8 @@ public class RegController {
     }
 
     @GetMapping("/reg")
-    public String regPage() {
+    public String regPage(Model model) {
+        model.addAttribute("user", new User());
         return "users/reg";
     }
 }
